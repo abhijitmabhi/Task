@@ -4,6 +4,7 @@ namespace App\Rules;
 
 use Illuminate\Contracts\Validation\Rule;
 use App\Models\SalesManInfo;
+use Illuminate\Support\Facades\Session;
 
 class PostalCodeConflictValidator implements Rule
 {
@@ -28,12 +29,13 @@ class PostalCodeConflictValidator implements Rule
     {
         if(str_contains($value, '*'))
         {
-            // checking for *postal code block is free
+            // checking for * postal code block is free
             $f_var = explode("*", $value);
             $salesManInfo = SalesManInfo::where('postalCode', 'like', $f_var[0].'%')->get();
 
             if(count($salesManInfo) > 0)
             {   
+                Session::flash('conflictList',  $salesManInfo);
                 return false;
             }
         } 
@@ -44,10 +46,11 @@ class PostalCodeConflictValidator implements Rule
         
             if(count($salesManInfo) > 0)
             {
+                Session::flash('conflictList',  $salesManInfo);
                 return false;
             }
 
-            // checking for *expression postal code
+            // checking the * block is free or not
             $salesManInfoWithRange = SalesManInfo::where('postalCode', 'like', '%*%')->get();
 
             foreach($salesManInfoWithRange as $info)
@@ -59,6 +62,7 @@ class PostalCodeConflictValidator implements Rule
                 
                 if(($sNumber <= $value) && ($value <= $eNumber))
                 {
+                    Session::flash('conflictList',  $salesManInfoWithRange->where('postalCode', $info->postalCode));
                     return false;
                 }
             }

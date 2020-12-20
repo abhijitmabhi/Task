@@ -5,16 +5,24 @@
 </div>
 @if ($errors->any())
     <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
     </div>
 @endif
 @if ($message = Session::get('success'))
     <div class="alert alert-success">
         <p>{{ $message }}</p>
+    </div>
+@endif
+@if ($conflictList = Session::get('conflictList'))
+    <div class="alert alert-danger">
+        <h6>Conflicting List</h6>
+        <ul>
+            @foreach ($conflictList as $error)
+                <li>{{ $error->name.' - '.$error->postalCode }}</li>
+            @endforeach
+        </ul>
     </div>
 @endif
 <div class="row">
