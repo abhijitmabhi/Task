@@ -28,7 +28,7 @@ class PostalCodeConflictValidator implements Rule
     {
         if(str_contains($value, '*'))
         {
-            
+            // checking for *postal code block is free
             $f_var = explode("*", $value);
             $salesManInfo = SalesManInfo::where('postalCode', 'like', $f_var[0].'%')->get();
 
@@ -36,7 +36,6 @@ class PostalCodeConflictValidator implements Rule
             {   
                 return false;
             }
-
         } 
         else {
 
@@ -77,6 +76,6 @@ class PostalCodeConflictValidator implements Rule
      */
     public function message()
     {
-        return 'This :attribute is conflicted by another salesman';
+        return 'This :attribute is conflicted by another salesman!';
     }
 }

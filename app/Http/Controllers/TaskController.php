@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\SalesManInfo;
 use App\Http\Requests\TaskStoreRequest;
+use Illuminate\Support\Facades\Session;
 
 class TaskController extends Controller
 {
@@ -15,8 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $salesMan = [];
-        return View('task.home', compact('salesMan'));
+        return View('task.home');
     }
 
     /**
@@ -37,9 +37,12 @@ class TaskController extends Controller
      */
     public function store(TaskStoreRequest $request)
     {
-        $salesMan = [];
-        SalesManInfo::create($request->all());
-        return View('task.home', compact('salesMan'));
+        if(SalesManInfo::create($request->all()))
+        {
+            Session::flash('success', 'Data inserted Successfully!');
+            return View('task.home');
+        };
+       
     }
 
     /**
