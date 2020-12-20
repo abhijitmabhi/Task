@@ -12,25 +12,18 @@
         </ul>
     </div>
 @endif
-<form action="{{ url('/task') }}" method="POST">
-    @csrf
-    <div class="mb-3">
-      <label for="name" class="form-label">Name</label>
-      <input type="text" name="name" class="form-control" id="name">
-    </div>
-    <div class="mb-3">
-      <label for="postalCode" class="form-label">Postal Code</label>
-      <input type="text" name="postalCode" class="form-control" id="postalCode">
-    </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-
-<div class="alert alert-danger">    
-    <p>Conflicts</p>
-    <ul>
-        @foreach ($salesMan as $item)
-            <li>{{ $item }}</li>
-        @endforeach
-    </ul>
+<div class="row">
+    <form action="{{ url('/task') }}" method="POST">
+        @csrf
+        <div class="mb-3">
+          <label for="name" class="form-label">Sales Person Name</label>
+          <input type="text" name="name" class="form-control" id="name">
+        </div>
+        <div class="mb-3">
+          <label for="postalCode" class="form-label">Postal Code</label>
+          <input type="text" name="postalCode" class="form-control" id="postalCode" maxlength="5">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
 </div>
 @endsection

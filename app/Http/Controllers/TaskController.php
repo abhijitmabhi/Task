@@ -38,17 +38,6 @@ class TaskController extends Controller
     public function store(TaskStoreRequest $request)
     {
         $salesMan = [];
-        // $salesManInfo = SalesManInfo::where('postalCode', $request->postalCode)->get();
-        // if(count($salesManInfo) > 0)
-        // {
-        //     foreach($salesManInfo as $info)
-        //     {
-        //         array_push($salesMan,$info->name);
-        //     }
-
-        //     return View('task.home', compact('salesMan'));
-        // }
-       
         SalesManInfo::create($request->all());
         return View('task.home', compact('salesMan'));
     }
